@@ -1,0 +1,13 @@
+---
+# Ansible playbook for a docker nginx server.
+#
+# @author Kevin Leslie (2017).
+
+- hosts: nginx
+  gather_facts: yes
+
+  
+
+  roles:
+    - docker-install
+    - ansible-role-docker-nginx

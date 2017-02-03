@@ -1,0 +1,38 @@
+---
+
+#- name: bootstrap epel-release install
+ # copy: src=ansible-bootstrap-epel.repo
+ #       dest=/etc/yum.repos.d/
+ #       owner=root group=root mode=0644
+
+#- name: epel-release install
+#  yum: name=epel-release
+#       enablerepo=ansible-bootstrap-epel
+#       state=present
+
+#- name: epel repository enable
+#  ini_file: dest=/etc/yum.repos.d/epel.repo
+#            section=epel
+#           option=enabled
+#            value=1
+
+- name: Install the selinux python module
+  yum: name=libselinux-python state=present
+  
+- name: Install the Docker packages
+  yum: name={{ item }} state=present
+  with_items:
+    - "docker"
+    - "docker-registry"
+    - "docker.x86_64"
+    - "docker-python.x86_64"
+
+# Action to enable docker service 
+#- service:
+#    name: docker
+#    state: enabled
+
+#  Action to start service docker, if not running
+- service:
+    name: docker
+    state: started

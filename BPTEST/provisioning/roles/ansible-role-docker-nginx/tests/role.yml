@@ -1,0 +1,14 @@
+---
+- hosts: 'nginx'
+  roles:
+    - role: 'ansible-role-docker-nginx'
+      become: yes
+  tasks:
+    - name: 'Check for a 200 and validate the page contents'
+      uri:
+        url: 'http://nginx'
+        return_content: true
+      register: webpage
+
+    - fail:
+      when: "'Hello BP  World!' not in webpage.content"
